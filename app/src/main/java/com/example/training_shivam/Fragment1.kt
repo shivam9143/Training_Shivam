@@ -1,11 +1,14 @@
 package com.example.training_shivam
 
 import android.Manifest
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -40,7 +43,7 @@ class Fragment1 : Fragment() {
         //                Manifest.permission.WRITE_EXTERNAL_STORAGE)
         //                != PackageManager.PERMISSION_GRANTED) {
         //
-        //            // Permission is not granted
+        //            // Permission is not grante
         //            // Should we show an explanation?
         //            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
         //                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -62,6 +65,17 @@ class Fragment1 : Fragment() {
         //        }
 
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+       // val defaultValue = resources.getInteger(R.integer.shared)
+        val sharedPref: SharedPreferences = activity!!.getSharedPreferences("Login_State", Context.MODE_PRIVATE)
+
+        val email = sharedPref.getString("Email", "0")
+        Toast.makeText(activity,"Email="+sharedPref.getString("Email","0"),Toast.LENGTH_SHORT).show()
+
     }
 
     companion object {

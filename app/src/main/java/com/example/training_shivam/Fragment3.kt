@@ -1,31 +1,40 @@
 package com.example.training_shivam
 
-import android.content.Context
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-
 import androidx.fragment.app.Fragment
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [Fragment3.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [Fragment3.newInstance] factory method to
- * create an instance of this fragment.
- */
-//    private OnFragmentInteractionListener mListener;
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.training_shivam.model.User
+import com.example.training_shivam.utils.DatabaseHelper
+import com.example.training_shivam.utils.InputValidation
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_fragment3.*
+import com.example.training_shivam.utils.InputValidation.*
+import com.google.android.material.snackbar.Snackbar
 
 class Fragment3 : Fragment() {
 
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
+    lateinit var  rootView : View
+    lateinit var userName  : String
+    lateinit var userEmail  : String
+    lateinit var userMobile  : String
+    lateinit var userAddress  : String
+    lateinit var userPassword  : String
+    lateinit var userCPassword  : String
+    private lateinit var inputValidation: InputValidation
+    private lateinit var databaseHelper: DatabaseHelper
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,62 +47,100 @@ class Fragment3 : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment3, container, false)
+        rootView = inflater.inflate(R.layout.fragment_fragment3, container, false)
+        (activity as AppCompatActivity).supportActionBar!!.hide()
+        inputValidation = InputValidation(activity as AppCompatActivity)
+        databaseHelper = DatabaseHelper(activity as AppCompatActivity)
+
+        return rootView
     }
 
-    //    // TODO: Rename method, update argument and hook method into UI event
-    //    public void onButtonPressed(Uri uri) {
-    //        if (mListener != null) {
-    //            mListener.onFragmentInteraction(uri);
-    //        }
-    //    }
-    //
-    //    @Override
-    //    public void onAttach(Context context) {
-    //        super.onAttach(context);
-    //        if (context instanceof OnFragmentInteractionListener) {
-    //            mListener = (OnFragmentInteractionListener) context;
-    //        } else {
-    //            throw new RuntimeException(context.toString()
-    //                    + " must implement OnFragmentInteractionListener");
-    //        }
-    //    }
-    //
-    //    @Override
-    //    public void onDetach() {
-    //        super.onDetach();
-    //        mListener = null;
-    //    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        signUpBtn.setOnClickListener {
+            postDataToSQLite()
+        }
+
+        already_user.setOnClickListener()
+        {
+            val accountsIntent = Intent(activity, loginActivity::class.java)
+            startActivity(accountsIntent)
+        }
+
+    }
+
+    private fun postDataToSQLite() {
+        if (!inputValidation!!.isInputEditTextFilled(fullName, "Name field cannot be blank")) {
+            return
+        }
+        if (!inputValidation!!.isInputEditTextFilled(userEmailId, "Email field cannot be blank")) {
+            return
+        }
+        if (!inputValidation!!.isInputEditTextEmail(userEmailId, "Invalid Email")) {
+            return
+        }
+        if (!inputValidation!!.isInputEditTextFilled(password, "Password field cannot be blank!")) {
+            return
+        }
+        if (!inputValidation!!.isInputEditTextMatches(password, confirmPassword,"Passwords do not match")) {
+            return
+        }
+        if (!inputValidation!!.isInputEditTextFilled(mobileNumber, "Password field cannot be blank!")) {
+            return
+        }
+        if (!inputValidation!!.isInputEditTextFilled(location, "Password field cannot be blank!")) {
+            return
+        }
+
+
+        if (!databaseHelper!!.checkUser(userEmailId!!.text.toString().trim())) {
+
+            var user = User(name = fullName!!.text.toString().trim(),
+                    email = userEmailId!!.text.toString().trim(),
+                    password = password!!.text.toString().trim(),
+                    mobile = mobileNumber!!.text.toString().trim(),
+                    address = location!!.text.toString().trim(),
+                    pic = "demoFilePath")
+
+            databaseHelper!!.addUser(user)
+
+            // Snack Bar to show success message that record saved successfully
+            Snackbar.make(signupForm!!, "Registration Successful", Snackbar.LENGTH_LONG).show()
+            emptyInputEditText()
+
+
+        } else {
+            // Snack Bar to show error message that record already exists
+            Snackbar.make(signupForm!!, "Entered Email already exists", Snackbar.LENGTH_LONG).show()
+        }
+
+
+    }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
+     * This method is to empty all input edit text
      */
+    private fun emptyInputEditText() {
+        fullName!!.text = null
+        userEmailId!!.text = null
+        mobileNumber!!.text = null
+        password!!.text = null
+        confirmPassword!!.text = null
+        location!!.text =null
+    }
+
+
+
+
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
-        // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
         private val ARG_PARAM1 = "param1"
         private val ARG_PARAM2 = "param2"
-
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment3.
-         */
-        // TODO: Rename and change types and number of parameters
         fun newInstance(param1: String, param2: String): Fragment3 {
             val fragment = Fragment3()
             val args = Bundle()
@@ -103,4 +150,4 @@ class Fragment3 : Fragment() {
             return fragment
         }
     }
-}// Required empty public constructor
+}
