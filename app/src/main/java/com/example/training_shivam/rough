@@ -1,0 +1,71 @@
+package com.example.training_shivam;
+
+import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+
+public class Fragment4 extends Fragment implements View.OnClickListener {
+
+    View rootView=null;
+    Button mt1,mt2,mt3;
+    FragmentManager fragmentManager = getFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    public Fragment4() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView= inflater.inflate(R.layout.fragment_fragment4, container, false);
+
+        /*  Declaring References    */
+
+        mt1 =   rootView.findViewById(R.id.mt1);
+        mt2 =   rootView.findViewById(R.id.mt2);
+        mt3 =   rootView.findViewById(R.id.mt3);
+
+
+        mt1.setOnClickListener(this);
+
+        return rootView;
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        Fragment fragment;
+        switch (view.getId())
+        {
+            case R.id.mt1:
+                fragment=new Fragment1();
+                fragmentTransaction.replace(R.id.my_nav_host_fragment, fragment);
+                break;
+            case R.id.mt2:
+                fragment=new Fragment2();
+                fragmentTransaction.replace(R.id.my_nav_host_fragment, fragment);
+                break;
+            case R.id.mt3:
+                fragment=new Fragment3();
+                fragmentTransaction.replace(R.id.my_nav_host_fragment, fragment);
+                break;
+            default:
+                break;
+        }
+    }
+}

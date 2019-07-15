@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/frag1">
+
+    <fragment
+        android:id="@+id/frag1"
+        android:name="com.example.training_shivam.Fragment1"
+        android:label="@string/Frag1"
+        tools:layout="@layout/fragment_fragment1">
+    </fragment>
+
+    <fragment
+        android:id="@+id/frag2"
+        android:name="com.example.training_shivam.Fragment2"
+        android:label="@string/Frag2"
+        tools:layout="@layout/fragment_fragment2">
+    </fragment>
+
+    <fragment
+        android:id="@+id/frag3"
+        android:name="com.example.training_shivam.Fragment3"
+        android:label="@string/Frag3"
+        tools:layout="@layout/fragment_fragment3">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/frag4"
+        android:name="com.example.training_shivam.Fragment4"
+        android:label="@string/Frag4"
+        tools:layout="@layout/fragment_fragment4">n
+    </fragment>
+
+</navigation>

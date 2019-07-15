@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/primary">
+        <item
+            android:id="@id/frag1"
+            android:icon="@drawable/profile"
+            android:title="@string/Frag1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorPrimary"/>
+        <item
+            android:id="@id/frag2"
+            android:title="@string/Frag2" />
+
+        <View style="@style/Divider"/>
+
+        <item
+            android:id="@id/frag3"
+            android:title="@string/Frag3" />
+
+        <View style="@style/Divider"/>
+
+
+        <item
+            android:id="@id/frag4"
+            android:title="@string/Frag4" />
+    </group>
+
+</menu>

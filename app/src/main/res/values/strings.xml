@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Training_Shivam</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Frag1">Your Profile</string>
+    <string name="Frag2">Fragment2</string>
+    <string name="Frag3">Fragment3</string>
+    <string name="Frag4">Fragment4</string>
+    <string name="title_activity_login">loginActivity</string>
+
+
+</resources>
