@@ -1,5 +1,7 @@
 package com.example.training_shivam;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -21,6 +23,7 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
     DrawerLayout drawerLayout;
     AppBarConfiguration appBarConfiguration;
     NavigationView navView;
+    SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState)
         {
@@ -35,20 +38,28 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
         navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         navView = findViewById(R.id.nav_view);
-
         /*   Attaching Components(Nav View & Action Bar) with Navigation Drawer */
         /*   Read more about all these  */
         //NavigationUI.setupWithNavController(toolbar, navController);  /* Adding this disables hamburger navigation drawer button! */
-
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
         NavigationUI.setupWithNavController(navView, navController);
-
             /*Adding Navigation Drawer Item Listner*/
-
         navView.setNavigationItemSelectedListener(this);
+        sharedPref = getSharedPreferences("Login_State", Context.MODE_PRIVATE);
+        if(sharedPref.getInt("LoggedIn",0)==1)
+        {
+            navController.navigate(R.id.frag1);
+//            navController.popBackStack();
+        }
+        else
+        {
+            navController.navigate(R.id.frag3);
+
+            //findNavController(fragment).navigate(R.id.action_signInFragment_to_usersFragment)
+            //navController.navigate(R.id.action_signupFragment_to_profileFragment);
 
         }
-
+        }
 
 
     @Override

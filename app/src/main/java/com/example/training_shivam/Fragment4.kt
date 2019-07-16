@@ -1,5 +1,7 @@
 package com.example.training_shivam
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 
@@ -14,6 +16,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
+import com.example.training_shivam.model.User
+import com.example.training_shivam.utils.DatabaseHelper
+import kotlinx.android.synthetic.main.fragment_fragment4.*
 
 
 /**
@@ -26,11 +32,12 @@ import android.widget.FrameLayout
  */
 //    private OnFragmentInteractionListener mListener;
 
-class Fragment4 : Fragment(), View.OnClickListener {
+class Fragment4 : Fragment() {
 
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
+    lateinit var lgnuser : User
 
     internal var rootView: View? = null
     internal lateinit var mt1: Button
@@ -41,6 +48,8 @@ class Fragment4 : Fragment(), View.OnClickListener {
     internal var fragment: Fragment? = null
     internal var fl: FrameLayout? = null
     internal lateinit var navController: NavController
+    lateinit var dbHelper : DatabaseHelper
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,43 +68,38 @@ class Fragment4 : Fragment(), View.OnClickListener {
 
         /*  Declaring References    */
         fl = rootView!!.findViewById(R.id.my_nav_host_fragment)
-        mt1 = rootView!!.findViewById(R.id.mt1)
-        mt2 = rootView!!.findViewById(R.id.mt2)
-        mt3 = rootView!!.findViewById(R.id.mt3)
-        navController = Navigation.findNavController(activity!!, R.id.my_nav_host_fragment)
-
-
-        mt1.setOnClickListener { navController.navigate(R.id.frag1) }
-        mt2.setOnClickListener { navController.navigate(R.id.frag2) }
-        mt3.setOnClickListener {
-            navController.popBackStack()
-
-            navController.navigate(R.id.frag3)
-        }
+        dbHelper = DatabaseHelper(activity as AppCompatActivity)
+        val sharedPref: SharedPreferences = activity!!.getSharedPreferences("Login_State", Context.MODE_PRIVATE)
+        val email = sharedPref.getString("Email", "0")
+        lgnuser = dbHelper.getLoggedInUserDetails(email)
+//        editName.setText( lgnuser.name)
+//        editEmail.setText(lgnuser.email)
+//        editMobile.setText(lgnuser.mobile)
+//        editAddress.setText(lgnuser.address)
 
 
         return rootView
     }
 
-    override fun onClick(view: View) {
-        val fragment: Fragment
-        when (view.id) {
-            R.id.mt1 -> {
-                fragment = Fragment1()
-                fragmentTransaction!!.replace(R.id.my_nav_host_fragment, fragment)
-            }
-            R.id.mt2 -> {
-                fragment = Fragment2()
-                fragmentTransaction!!.replace(R.id.my_nav_host_fragment, fragment)
-            }
-            R.id.mt3 -> {
-                fragment = Fragment3()
-                fragmentTransaction!!.replace(R.id.my_nav_host_fragment, fragment)
-            }
-            else -> {
-            }
-        }
-    }
+//    override fun onClick(view: View) {
+//        val fragment: Fragment
+//        when (view.id) {
+//            R.id.mt1 -> {
+//                fragment = Fragment1()
+//                fragmentTransaction!!.replace(R.id.my_nav_host_fragment, fragment)
+//            }
+//            R.id.mt2 -> {
+//                fragment = Fragment2()
+//                fragmentTransaction!!.replace(R.id.my_nav_host_fragment, fragment)
+//            }
+//            R.id.mt3 -> {
+//                fragment = Fragment3()
+//                fragmentTransaction!!.replace(R.id.my_nav_host_fragment, fragment)
+//            }
+//            else -> {
+//            }
+//        }
+//    }
 
     //    // TODO: Rename method, update argument and hook method into UI event
     //    public void onButtonPressed(Uri uri) {

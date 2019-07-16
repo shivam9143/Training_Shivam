@@ -1,26 +1,38 @@
 package com.example.training_shivam
 
 
+import android.annotation.SuppressLint
+import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 
 class Fragment2 : Fragment() {
 
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
-
+    lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     lateinit var rootView: View
     var myDataset : ArrayList<contactList> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,31 +47,94 @@ class Fragment2 : Fragment() {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_fragment2, container, false)
         viewManager = LinearLayoutManager(activity)
-        addContacts()
-        viewAdapter = MyAdapter(myDataset)
-        recyclerView = rootView.findViewById<RecyclerView>(R.id.my_recycler_view).apply {
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
-            setHasFixedSize(true)
-            // use a linear layout manager
-            layoutManager = viewManager
-            // specify an viewAdapter (see also next example)
-            adapter = viewAdapter
-
-        }
-
-
+        progressBar =rootView.findViewById(R.id.MyprogressBar)
+        recyclerView = rootView.findViewById<RecyclerView>(R.id.my_recycler_view)
+        recyclerView.layoutManager=viewManager
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = MyAdapter(myDataset)
         return rootView
     }
 
-    private fun addContacts() {
-        for(i in 1..9) {
-            myDataset.add(contactList("AAAA$i",
-                    "aaaa@aaaa$i.com",
-                    "999064924$i",
-                    "https://avatars0.githubusercontent.com/u/21219419?s=460&v=4"))
+    override fun onResume() {
+        super.onResume()
+        AsyncTaskExample().execute()
+    }
+
+    inner class AsyncTaskExample : AsyncTask<String, String, String>() {
+        override fun onPreExecute() {
+            super.onPreExecute()
+            progressBar.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        }
+
+        override fun doInBackground(vararg p0: String?): String {
+
+            var result = ""
+            try {
+                val url = URL("http://5d2d694443c343001498cfbd.mockapi.io/contactList")
+                val httpURLConnection = url.openConnection() as HttpURLConnection
+                httpURLConnection.readTimeout = 8000
+                httpURLConnection.connectTimeout = 8000
+                httpURLConnection.doOutput = true
+                httpURLConnection.connect()
+                myDataset.clear()
+                Log.e("In Backgroung", url.toString())
+                val responseCode: Int = httpURLConnection.responseCode
+                Log.e("Response Code", "responseCode - " + responseCode)
+                if (responseCode == 201) {
+                    val inStream: InputStream = httpURLConnection.inputStream
+                    val isReader = InputStreamReader(inStream)
+                    val bReader = BufferedReader(isReader)
+                    var tempStr: String?
+                    try {
+                        while (true) {
+                            tempStr = bReader.readLine()
+                            if (tempStr == null) {
+                                break
+                            }
+                            result += tempStr
+                        }
+                        Log.e("Result", result.toString())
+                    } catch (Ex: Exception) {
+                        Log.e("Async ERROR", "Error in convertToString " + Ex.printStackTrace())
+                    }
+                }
+            } catch (ex: Exception) {
+                Log.d("", "Error in doInBackground " + ex.message)
+            }
+            return result
+        }
+
+        override fun onPostExecute(result: String?) {
+
+            super.onPostExecute(result)
+           progressBar.visibility = View.INVISIBLE
+            recyclerView.visibility = View.VISIBLE
+            if (result == "") {
+                Log.e("Result Blank", result.toString())
+            } else {
+                var jsonObject: JSONObject = JSONObject(result)
+                var jsonArray =  JSONArray()
+                jsonArray = jsonObject.getJSONArray("key")
+                var length : Int = jsonArray.length()
+                var len1 : Int = length
+                var jsonOb :JSONObject
+                while(len1-->0)
+                {
+                    jsonOb = jsonArray[len1] as JSONObject
+                    Log.e("row"+len1,jsonOb.toString())
+                    myDataset.add(contactList(jsonOb.getString("name"),
+                            jsonOb.getString("email"),
+                            jsonOb.getString("phone"),
+                            jsonOb.getString("picurl")))
+                }
+                viewAdapter = MyAdapter(myDataset)
+                recyclerView.adapter = viewAdapter
+            }
         }
     }
+
+
 
     companion object {
         // TODO: Rename parameter arguments, choose names that match

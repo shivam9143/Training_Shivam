@@ -53,7 +53,7 @@ class loginActivity : AppCompatActivity() {
             val sharedPref: SharedPreferences = getSharedPreferences("Login_State", Context.MODE_PRIVATE)
             with (sharedPref.edit()) {
                 putInt("LoggedIn", 1)
-                Log.e("Email===",login_emailid.text.toString())
+                //Log.e("Email===",login_emailid.text.toString())
                 putString("Email", login_emailid.text.toString())
                 commit()
             }
@@ -64,7 +64,6 @@ class loginActivity : AppCompatActivity() {
             startActivity(accountsIntent)
 
         } else {
-
             // Snack Bar to show success message that record is wrong
             Snackbar.make(login!!, "No matching record found!", Snackbar.LENGTH_LONG).show()
         }

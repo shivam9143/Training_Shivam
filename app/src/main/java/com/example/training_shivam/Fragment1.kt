@@ -14,6 +14,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.example.training_shivam.model.User
+import com.example.training_shivam.utils.DatabaseHelper
+import kotlinx.android.synthetic.main.fragment_fragment1.*
 
 import java.util.Objects
 
@@ -24,6 +29,9 @@ class Fragment1 : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
     internal lateinit var rootView: View
+    lateinit var dbHelper : DatabaseHelper
+    lateinit var lgnuser : User
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +45,12 @@ class Fragment1 : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_fragment1, container, false)
+        navController = Navigation.findNavController(activity as AppCompatActivity, R.id.my_nav_host_fragment)
 
+//        main_backdrop.setOnClickListener()
+//        {
+//            navController.navigate(R.id.frag4)
+//        }
         // Here, thisActivity is the current activity
         //        if (ContextCompat.checkSelfPermission(getActivity(),
         //                Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -74,7 +87,13 @@ class Fragment1 : Fragment() {
         val sharedPref: SharedPreferences = activity!!.getSharedPreferences("Login_State", Context.MODE_PRIVATE)
 
         val email = sharedPref.getString("Email", "0")
-        Toast.makeText(activity,"Email="+sharedPref.getString("Email","0"),Toast.LENGTH_SHORT).show()
+        dbHelper = DatabaseHelper(activity as AppCompatActivity)
+        lgnuser = dbHelper.getLoggedInUserDetails(email)
+        name.text= lgnuser.name
+        mobile.text= lgnuser.mobile
+        address.text = lgnuser.address
+        emailProfile.text = lgnuser.email
+        Toast.makeText(activity,"Email="+lgnuser.email+", Name="+lgnuser.name+",mobile="+lgnuser.mobile,Toast.LENGTH_SHORT).show()
 
     }
 
