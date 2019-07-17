@@ -33,7 +33,6 @@ class Fragment2 : Fragment() {
     lateinit var rootView: View
     var myDataset : ArrayList<contactList> = ArrayList()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {

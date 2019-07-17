@@ -135,7 +135,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_margin="10dp"
         android:layout_width="50dp"
-        android:id="@+id/editPic"
+        android:id="@+id/editProfile"
         app:layout_anchor="@id/main.backdrop"
         app:layout_anchorGravity="right|end"
         android:src="@drawable/edit"

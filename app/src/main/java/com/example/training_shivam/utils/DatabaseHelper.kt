@@ -45,7 +45,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 var name = it.getString(it.getColumnIndex(COLUMN_USER_NAME))
                 var mob = it.getString(it.getColumnIndex(COLUMN_USER_MOBILE))
                 var add = it.getString(it.getColumnIndex(COLUMN_USER_ADDRESS))
-                var email = it.getString(it.getColumnIndex(COLUMN_USER_ADDRESS))
+                var email = it.getString(it.getColumnIndex(COLUMN_USER_EMAIL))
                 var pic = it.getString(it.getColumnIndex(COLUMN_PIC_FILENAME))
 
                 result = User(id,name,email,mob,add,"****",pic)
@@ -126,15 +126,28 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
      */
     fun updateUser(user: User) {
         val db = this.writableDatabase
+        if(user.pic=="")
+        {
+            val values = ContentValues()
+            values.put(COLUMN_USER_NAME, user.name)
+            values.put(COLUMN_USER_ADDRESS, user.address)
+            values.put(COLUMN_USER_MOBILE, user.mobile)
+            // updating row
+            db.update(TABLE_USER, values, "$COLUMN_USER_ID = ?",
+                    arrayOf(user.id.toString()))
+        }
+        else
+        {
+            val values = ContentValues()
+            values.put(COLUMN_USER_NAME, user.name)
+            values.put(COLUMN_USER_ADDRESS, user.address)
+            values.put(COLUMN_USER_MOBILE, user.mobile)
+            values.put(COLUMN_PIC_FILENAME, user.pic)
 
-        val values = ContentValues()
-        values.put(COLUMN_USER_NAME, user.name)
-        values.put(COLUMN_USER_EMAIL, user.email)
-        values.put(COLUMN_USER_PASSWORD, user.password)
-
-        // updating row
-        db.update(TABLE_USER, values, "$COLUMN_USER_ID = ?",
-                arrayOf(user.id.toString()))
+            // updating row
+            db.update(TABLE_USER, values, "$COLUMN_USER_ID = ?",
+                    arrayOf(user.id.toString()))
+        }
         db.close()
     }
 

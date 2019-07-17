@@ -6,27 +6,27 @@
             android:id="@id/frag1"
             android:icon="@drawable/profile"
             android:title="@string/Frag1" />
+    </group>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimary"/>
+    <group android:id="@+id/f2">
         <item
             android:id="@id/frag2"
+            android:icon="@drawable/contacts"
             android:title="@string/Frag2" />
+    </group>
 
-        <View style="@style/Divider"/>
-
-        <!--<item-->
-            <!--android:id="@id/frag3"-->
-            <!--android:title="@string/Frag3" />-->
-
-        <!--<View style="@style/Divider"/>-->
-
-
+    <group android:id="@+id/f3">
         <item
             android:id="@id/frag4"
+            android:icon="@drawable/editprofile"
             android:title="@string/Frag4" />
+    </group>
+
+    <group android:id="@+id/f4">
+        <item
+            android:id="@+id/frag5"
+            android:icon="@drawable/logout"
+            android:title="Logout" />
     </group>
 
 </menu>

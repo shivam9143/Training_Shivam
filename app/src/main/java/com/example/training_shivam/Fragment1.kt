@@ -1,26 +1,20 @@
 package com.example.training_shivam
-
-import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import com.example.training_shivam.model.User
 import com.example.training_shivam.utils.DatabaseHelper
+import com.example.training_shivam.utils.ImageConverter
 import kotlinx.android.synthetic.main.fragment_fragment1.*
-
-import java.util.Objects
 
 
 class Fragment1 : Fragment() {
@@ -45,7 +39,7 @@ class Fragment1 : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_fragment1, container, false)
-        navController = Navigation.findNavController(activity as AppCompatActivity, R.id.my_nav_host_fragment)
+        navController = findNavController(activity as AppCompatActivity, R.id.my_nav_host_fragment)
 
 //        main_backdrop.setOnClickListener()
 //        {
@@ -93,6 +87,9 @@ class Fragment1 : Fragment() {
         mobile.text= lgnuser.mobile
         address.text = lgnuser.address
         emailProfile.text = lgnuser.email
+        val bitmap = BitmapFactory.decodeFile(lgnuser.pic)
+        val circularBitmap = ImageConverter.getRoundedCornerBitmap(bitmap, 50)
+        main_backdrop.setImageBitmap(circularBitmap)
         Toast.makeText(activity,"Email="+lgnuser.email+", Name="+lgnuser.name+",mobile="+lgnuser.mobile,Toast.LENGTH_SHORT).show()
 
     }

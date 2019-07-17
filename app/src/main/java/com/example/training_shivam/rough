@@ -1,71 +1,158 @@
-package com.example.training_shivam;
-
-import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
-public class Fragment4 extends Fragment implements View.OnClickListener {
-
-    View rootView=null;
-    Button mt1,mt2,mt3;
-    FragmentManager fragmentManager = getFragmentManager();
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    public Fragment4() {
-        // Required empty public constructor
-    }
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<ScrollView-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:id="@+id/scrollView"-->
+    <!--android:background="@color/colorPrimaryDark"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android">-->
 
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        rootView= inflater.inflate(R.layout.fragment_fragment4, container, false);
-
-        /*  Declaring References    */
-
-        mt1 =   rootView.findViewById(R.id.mt1);
-        mt2 =   rootView.findViewById(R.id.mt2);
-        mt3 =   rootView.findViewById(R.id.mt3);
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:id="@+id/editForm"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:padding="20dp" >-->
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@drawable/profilepic"-->
+            <!--android:id="@+id/iv"/>-->
 
 
-        mt1.setOnClickListener(this);
+            <!--<EditText-->
+                <!--android:id="@+id/editName"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:background="@android:color/transparent"-->
+                <!--android:drawableLeft="@drawable/name"-->
+                <!--android:drawablePadding="8dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:hint="@string/fullName"-->
+                <!--android:inputType="textCapWords"-->
+                <!--android:padding="10dp"-->
+                <!--android:singleLine="true"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textColorHint="@color/white"-->
+                <!--android:textSize="16sp" />-->
 
-        return rootView;
-    }
+        <!--&lt;!&ndash;<View&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="fill_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="1px"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@color/white_greyish" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<com.google.android.material.textfield.TextInputLayout&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content">&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<EditText&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/editEmail"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="fill_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginTop="5dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@android:color/transparent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:drawableLeft="@drawable/email"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:drawablePadding="8dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="center_vertical"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:hint="@string/email"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:inputType="textEmailAddress"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:padding="10dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:singleLine="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColorHint="@color/white"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="16sp" />&ndash;&gt;-->
+        <!--&lt;!&ndash;</com.google.android.material.textfield.TextInputLayout>&ndash;&gt;-->
+
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:background="@color/white_greyish" />-->
 
 
-    @Override
-    public void onClick(View view) {
-        Fragment fragment;
-        switch (view.getId())
-        {
-            case R.id.mt1:
-                fragment=new Fragment1();
-                fragmentTransaction.replace(R.id.my_nav_host_fragment, fragment);
-                break;
-            case R.id.mt2:
-                fragment=new Fragment2();
-                fragmentTransaction.replace(R.id.my_nav_host_fragment, fragment);
-                break;
-            case R.id.mt3:
-                fragment=new Fragment3();
-                fragmentTransaction.replace(R.id.my_nav_host_fragment, fragment);
-                break;
-            default:
-                break;
-        }
-    }
-}
+        <!--<EditText-->
+            <!--android:id="@+id/editMobile"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:drawableLeft="@drawable/dialler"-->
+            <!--android:drawablePadding="8dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:hint="@string/mobileNumber"-->
+            <!--android:inputType="phone"-->
+            <!--android:padding="10dp"-->
+            <!--android:singleLine="true"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textColorHint="@color/white"-->
+            <!--android:textSize="16sp" />-->
+
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:background="@color/white_greyish" />-->
+
+
+
+
+        <!--<EditText-->
+            <!--android:id="@+id/editAddress"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:drawableLeft="@drawable/edit"-->
+            <!--android:drawablePadding="8dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:hint="@string/location"-->
+            <!--android:inputType="textCapWords"-->
+            <!--android:padding="10dp"-->
+            <!--android:singleLine="true"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textColorHint="@color/white"-->
+            <!--android:textSize="16sp" />-->
+
+        <!--&lt;!&ndash;<View&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="fill_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="1px"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:background="@color/white_greyish" />&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<CheckBox&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/terms_conditions"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginTop="7dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="@string/terms_conditions"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textSize="14sp" />&ndash;&gt;-->
+        <!--<Button-->
+            <!--android:id="@+id/editPic"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:background="@drawable/loginbutton_selector"-->
+            <!--android:padding="3dp"-->
+            <!--android:text="Upload Picture"-->
+            <!--android:textColor="@color/red"-->
+            <!--android:textSize="17sp"-->
+            <!--android:textStyle="bold" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/updateButton"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:background="@drawable/loginbutton_selector"-->
+            <!--android:padding="3dp"-->
+            <!--android:text="Update Details"-->
+            <!--android:textColor="@color/red"-->
+            <!--android:textSize="17sp"-->
+            <!--android:textStyle="bold" />-->
+
+
+
+    <!--</LinearLayout>-->
+<!--</ScrollView>-->
