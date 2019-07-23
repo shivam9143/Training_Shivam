@@ -1,4 +1,4 @@
-package com.example.training_shivam
+package com.example.training_shivam.view.mainActivity.ui
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.BitmapFactory
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
+import com.example.training_shivam.R
 import com.example.training_shivam.model.User
 import com.example.training_shivam.utils.DatabaseHelper
 import com.example.training_shivam.utils.ImageConverter
@@ -41,35 +42,7 @@ class Fragment1 : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_fragment1, container, false)
         navController = findNavController(activity as AppCompatActivity, R.id.my_nav_host_fragment)
 
-//        main_backdrop.setOnClickListener()
-//        {
-//            navController.navigate(R.id.frag4)
-//        }
-        // Here, thisActivity is the current activity
-        //        if (ContextCompat.checkSelfPermission(getActivity(),
-        //                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        //                != PackageManager.PERMISSION_GRANTED) {
-        //
-        //            // Permission is not grante
-        //            // Should we show an explanation?
-        //            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-        //                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-        //                // Show an explanation to the user *asynchronously* -- don't block
-        //                // this thread waiting for the user's response! After the user
-        //                // sees the explanation, try again to request the permission.
-        //            } else {
-        //                // No explanation needed, we can request the permission.
-        //                ActivityCompat.requestPermissions(getActivity(),
-        //                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-        //                        MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE)
-        //
-        //                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-        //                // app-defined int constant. The callback method gets the
-        //                // result of the request.
-        //            }
-        //        } else {
-        //            // Permission has already been granted
-        //        }
+
 
         return rootView
     }
@@ -79,19 +52,34 @@ class Fragment1 : Fragment() {
         //val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
        // val defaultValue = resources.getInteger(R.integer.shared)
         val sharedPref: SharedPreferences = activity!!.getSharedPreferences("Login_State", Context.MODE_PRIVATE)
-
+        editProfile.setOnClickListener()
+        {
+            navController.navigate(R.id.frag4)
+        }
         val email = sharedPref.getString("Email", "0")
+try {
+    if(sharedPref.getInt("LoggedIn", 0)==1) {
         dbHelper = DatabaseHelper(activity as AppCompatActivity)
         lgnuser = dbHelper.getLoggedInUserDetails(email)
-        name.text= lgnuser.name
-        mobile.text= lgnuser.mobile
+        name.text = lgnuser.name
+        mobile.text = lgnuser.mobile
         address.text = lgnuser.address
         emailProfile.text = lgnuser.email
-        val bitmap = BitmapFactory.decodeFile(lgnuser.pic)
-        val circularBitmap = ImageConverter.getRoundedCornerBitmap(bitmap, 50)
-        main_backdrop.setImageBitmap(circularBitmap)
-        Toast.makeText(activity,"Email="+lgnuser.email+", Name="+lgnuser.name+",mobile="+lgnuser.mobile,Toast.LENGTH_SHORT).show()
+        if (lgnuser.pic != "demoFilePath")
+        {
+            val bitmap = BitmapFactory.decodeFile(lgnuser.pic)
+            val circularBitmap = ImageConverter.getRoundedCornerBitmap(bitmap, 50)
+            main_backdrop.setImageBitmap(circularBitmap)
 
+        }
+}
+
+//            Toast.makeText(activity, "Email=" + lgnuser.email + ", Name=" + lgnuser.name + ",mobile=" + lgnuser.mobile, Toast.LENGTH_SHORT).show()
+        }
+catch (e : Exception)
+{
+    Toast.makeText(activity, e.message.toString(), Toast.LENGTH_SHORT).show()
+}
     }
 
     companion object {

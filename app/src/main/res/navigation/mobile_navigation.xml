@@ -7,21 +7,24 @@
 
     <fragment
         android:id="@+id/frag1"
-        android:name="com.example.training_shivam.Fragment1"
+        android:tag="profilePage"
+        android:name="com.example.training_shivam.view.mainActivity.ui.Fragment1"
         android:label="@string/Frag1"
         tools:layout="@layout/fragment_fragment1">
     </fragment>
 
     <fragment
         android:id="@+id/frag2"
-        android:name="com.example.training_shivam.Fragment2"
+        android:tag="contactsPage"
+        android:name="com.example.training_shivam.view.mainActivity.ui.Fragment2"
         android:label="@string/Frag2"
         tools:layout="@layout/fragment_fragment2">
     </fragment>
 
     <fragment
         android:id="@+id/frag3"
-        android:name="com.example.training_shivam.Fragment3"
+        android:tag="signUpPage"
+        android:name="com.example.training_shivam.view.mainActivity.ui.Fragment3"
         android:label="@string/Frag3"
         tools:layout="@layout/fragment_fragment3">
         <action
@@ -35,7 +38,8 @@
 
     <fragment
         android:id="@+id/frag4"
-        android:name="com.example.training_shivam.Fragment4"
+        android:tag="editProfilePage"
+        android:name="com.example.training_shivam.view.mainActivity.ui.Fragment4"
         android:label="@string/Frag4"
         tools:layout="@layout/fragment_fragment4">n
     </fragment>

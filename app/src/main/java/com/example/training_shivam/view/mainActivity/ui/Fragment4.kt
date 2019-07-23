@@ -1,7 +1,6 @@
-package com.example.training_shivam
+package com.example.training_shivam.view.mainActivity.ui
 
 import android.Manifest
-import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.DialogInterface
@@ -19,10 +18,7 @@ import android.provider.Settings
 import android.util.Log
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -35,11 +31,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.training_shivam.R
 import com.example.training_shivam.model.User
 import com.example.training_shivam.utils.DatabaseHelper
 import com.example.training_shivam.utils.ImageConverter
-import com.karumi.dexter.Dexter
-import kotlinx.android.synthetic.main.fragment_fragment1.*
 import kotlinx.android.synthetic.main.fragment_fragment4.*
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -108,32 +103,42 @@ class Fragment4 : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        editPic.setOnClickListener { showPictureDialog() }
-        imageview = iv
-        displayEditName.text = lgnuser.name
-        editName.setText(lgnuser.name)
-        editMobile.setText(lgnuser.mobile)
-        editAddress.setText(lgnuser.address)
-        val bitmap = BitmapFactory.decodeFile(lgnuser.pic)
-        val circularBitmap = ImageConverter.getRoundedCornerBitmap(bitmap, 50)
-        iv.setImageBitmap(circularBitmap)
-        updateButton.setOnClickListener()
-        {
-            if(imageChanged)
-            {
-                var user: User = User(lgnuser.id, editName.text.toString(), lgnuser.email, editMobile.text.toString(), editAddress.text.toString(),"*****",f.absolutePath)
-                dbHelper.updateUser(user)
-                Toast.makeText(activity, "Update done Successfully", Toast.LENGTH_SHORT).show()
+        try {
+            editPic.setOnClickListener { showPictureDialog() }
+            imageview = iv
+            displayEditName.text = lgnuser.name
+            editName.setText(lgnuser.name)
+            editMobile.setText(lgnuser.mobile)
+            editAddress.setText(lgnuser.address)
+            if (lgnuser.pic != "demoFilePath") {
+                val bitmap = BitmapFactory.decodeFile(lgnuser.pic)
+                val circularBitmap = ImageConverter.getRoundedCornerBitmap(bitmap, 50)
+                iv.setImageBitmap(circularBitmap)
             }
-            else
+            updateButton.setOnClickListener()
             {
-                var user: User = User(lgnuser.id, editName.text.toString(), lgnuser.email, editMobile.text.toString(), editAddress.text.toString(),"*****","")
-                dbHelper.updateUser(user)
-                Toast.makeText(activity, "Update done Successfully", Toast.LENGTH_SHORT).show()
-            }
+                if(imageChanged)
+                {
+                    var user: User = User(lgnuser.id, editName.text.toString(), lgnuser.email, editMobile.text.toString(), editAddress.text.toString(),"*****",f.absolutePath)
+                    dbHelper.updateUser(user)
+                    Toast.makeText(activity, "Update done Successfully", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    var user: User = User(lgnuser.id, editName.text.toString(), lgnuser.email, editMobile.text.toString(), editAddress.text.toString(),"*****","")
+                    dbHelper.updateUser(user)
+                    Toast.makeText(activity, "Update done Successfully", Toast.LENGTH_SHORT).show()
+                }
 
+
+            }
+        }
+        catch (e : Exception)
+        {
+            Toast.makeText(activity, e.message.toString(), Toast.LENGTH_SHORT).show()
 
         }
+
     }
 
     fun requestMultiplePermissions()

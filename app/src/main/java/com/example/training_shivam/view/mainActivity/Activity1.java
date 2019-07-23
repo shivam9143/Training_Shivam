@@ -1,4 +1,4 @@
-package com.example.training_shivam;
+package com.example.training_shivam.view.mainActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,17 +14,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.training_shivam.R;
 import com.example.training_shivam.model.User;
 import com.example.training_shivam.utils.DatabaseHelper;
+import com.example.training_shivam.utils.DrawerInterface;
 import com.example.training_shivam.utils.ImageConverter;
+import com.example.training_shivam.utils.onBackPressed;
 import com.google.android.material.navigation.NavigationView;
 
-public class Activity1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class Activity1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DrawerInterface
 {
     Toolbar toolbar;
     NavController navController;
@@ -48,6 +52,17 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
         navView = findViewById(R.id.nav_view);
         View headerLayout = navView.getHeaderView(0);
 
+        if(getIntent().getExtras()!=null)
+        {
+            int intentFragment = getIntent().getExtras().getInt("fragmentToOpen");
+            switch (intentFragment)
+            {
+                case 3:
+                    navController.navigate(R.id.frag3);
+            }
+        }
+
+
         /*   Attaching Components(Nav View & Action Bar) with Navigation Drawer */
         /*   Read more about all these  */
         //NavigationUI.setupWithNavController(toolbar, navController);  /* Adding this disables hamburger navigation drawer button! */
@@ -63,6 +78,7 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
             TextView headerText = headerLayout.findViewById(R.id.nav_header_textView);
             headerText.setText(lgn.getEmail());
             ImageView headerPic = headerLayout.findViewById(R.id.nav_header_imageView);
+            if(!lgn.getPic().equals("demoFilePath"))
             headerPic.setImageBitmap(ImageConverter.getRoundedCornerBitmap(BitmapFactory.decodeFile(lgn.getPic()), 100));
 //            navController.popBackStack();
         }
@@ -74,6 +90,16 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
         }
         }
 
+//    @Override
+//    public void onBackPressed() {
+//        Fragment f = getSupportFragmentManager().findFragmentById(R.id.frag3);
+//        if(f instanceof Fragment3)
+//        {
+//            finish();
+//        }
+//        super.onBackPressed();
+//
+//    }
 
     @Override
     public boolean onSupportNavigateUp()
@@ -107,6 +133,7 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
                 break;
                 case    R.id.frag5:
                    sharedPref.edit().putInt("LoggedIn",0).apply();
+                   sharedPref.edit().clear();
 
                    finish();
                 default:
@@ -115,5 +142,12 @@ public class Activity1 extends AppCompatActivity implements NavigationView.OnNav
             return true;
         }
 
+
+    @Override
+    public void setDrawerEnabled(boolean enabled) {
+        int lockMode = enabled ? DrawerLayout.LOCK_MODE_UNLOCKED :
+                DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
+        drawerLayout.setDrawerLockMode(lockMode);
+    }
 
 }

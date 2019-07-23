@@ -1,5 +1,6 @@
-package com.example.training_shivam
+package com.example.training_shivam.view.mainActivity.ui
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,28 +9,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import com.example.training_shivam.R
 import com.example.training_shivam.model.User
 import com.example.training_shivam.utils.DatabaseHelper
+import com.example.training_shivam.utils.DrawerInterface
 import com.example.training_shivam.utils.InputValidation
+import com.example.training_shivam.view.loginActivity.loginActivity
+import com.example.training_shivam.view.mainActivity.Activity1
 import kotlinx.android.synthetic.main.fragment_fragment3.*
 import com.google.android.material.snackbar.Snackbar
+import java.util.regex.Pattern
 
 
-class Fragment3 : Fragment() {
+class Fragment3 :  Fragment() {
+
+
 
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
     lateinit var  rootView : View
-    lateinit var userName  : String
-    lateinit var userEmail  : String
-    lateinit var userMobile  : String
-    lateinit var userAddress  : String
-    lateinit var userPassword  : String
-    lateinit var userCPassword  : String
     private lateinit var inputValidation: InputValidation
     private lateinit var databaseHelper: DatabaseHelper
-
+    lateinit var drawerInterface: DrawerInterface
+    var MobilePattern : Regex = Pattern.compile("\\+[0-9.()-]{7,15}").toRegex()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,12 @@ class Fragment3 : Fragment() {
         }
     }
 
+
+    override fun onAttach(ac: Context?) {
+        super.onAttach(context)
+        drawerInterface = activity as  (DrawerInterface)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -46,9 +55,10 @@ class Fragment3 : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.hide()
         inputValidation = InputValidation(activity as AppCompatActivity)
         databaseHelper = DatabaseHelper(activity as AppCompatActivity)
-
+        drawerInterface.setDrawerEnabled (false)
         return rootView
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,13 +66,17 @@ class Fragment3 : Fragment() {
         signUpBtn.setOnClickListener {
             postDataToSQLite()
         }
-
         already_user.setOnClickListener()
         {
             val accountsIntent = Intent(activity, loginActivity::class.java)
             startActivity(accountsIntent)
+            (activity as Activity1).finish()
         }
+    }
 
+    override fun onPause() {
+        (activity as Activity1).finish()
+        super.onPause()
     }
 
     private fun postDataToSQLite() {
@@ -81,10 +95,11 @@ class Fragment3 : Fragment() {
         if (!inputValidation!!.isInputEditTextMatches(password, confirmPassword,"Passwords do not match")) {
             return
         }
-        if (!inputValidation!!.isInputEditTextFilled(mobileNumber, "Password field cannot be blank!")) {
+        if (!inputValidation!!.isInputEditTextFilled(mobileNumber, "Mobile field cannot be blank!")) {
             return
         }
-        if (!inputValidation!!.isInputEditTextFilled(location, "Password field cannot be blank!")) {
+
+        if (!inputValidation!!.isInputEditTextFilled(location, "Location field cannot be blank!")) {
             return
         }
 

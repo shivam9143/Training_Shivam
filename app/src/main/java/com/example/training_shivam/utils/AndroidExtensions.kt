@@ -1,9 +1,10 @@
-package com.example.training_shivam
+package com.example.training_shivam.utils
 
 
 import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.example.training_shivam.R
 import org.json.JSONObject
 
 fun ImageView.loadImg(imageUrl: String?) =

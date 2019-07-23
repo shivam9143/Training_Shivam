@@ -4,63 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.training_shivam.Activity1"
+    tools:context="com.example.training_shivam.view.mainActivity.Activity1"
     android:background="@color/white_greyish"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="200dp">
+
         <LinearLayout
-            android:background="@drawable/gradientbackground"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/gradientbackground"
             android:orientation="vertical">
+
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="160dp"
-                android:layout_marginTop="40dp"
-                android:layout_height="160dp">
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/iv"
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:src="@drawable/profilepic"/>
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/profilepic" />
 
-                <Button android:id="@+id/editPic"
+                <Button
+                    android:id="@+id/editPic"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/edit"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignEnd="@id/iv"
-                    />
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/edit" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/displayEditName"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
                 android:text="Wiliam Snoe"
                 android:textColor="#fff"
-                android:textStyle="bold"
-                android:textSize="21sp"/>
+                android:textSize="21sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/scrollView"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
-            android:layout_width="360dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
             <LinearLayout
